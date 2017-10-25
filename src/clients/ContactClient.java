@@ -27,14 +27,33 @@ import java.net.MalformedURLException;
 import entites.ContactEntity;
 
 public class ContactClient {
+	
+	private String ip;
+	
+	public ContactClient(String ip) {
+		super();
+		this.ip = ip;
+	}
+	
+
+	public String getIp() {
+		return ip;
+	}
+
+
+	public void setIp(String ip) {
+		this.ip = ip;
+	}
+
+
 	// ________________________________ Show all contacts_______________________
-	public static Object[][] showContacts() {
+	public  Object[][] showContacts() {
 		Object[][] contact = null;
 		String result = "";
 		try {
 
 			DefaultHttpClient httpClient = new DefaultHttpClient();
-			HttpGet getRequest = new HttpGet("http://localhost:8080/ProjectFinal/myapi/contacts/show");
+			HttpGet getRequest = new HttpGet("http://"+ip+":8080/ProjectFinal/myapi/contacts/show");
 
 			HttpResponse response = httpClient.execute(getRequest);
 			if (response.getStatusLine().getStatusCode() != 200) {
@@ -72,7 +91,7 @@ public class ContactClient {
 	}
 
 	// --------------------------- convert json to list
-	public static List jsonToList(String input) {
+	public  List jsonToList(String input) {
 		Gson gsonReceiver = new Gson();
 		Type type = new TypeToken<List<ContactEntity>>() {
 		}.getType();
@@ -86,12 +105,12 @@ public class ContactClient {
 	}
 	// _________________________________ add new contact___________________
 
-	public static void saveContact(String name, String family, int tel, int mobile, String email) {
+	public  void saveContact(String name, String family, int tel, int mobile, String email) {
 
 		try {
 
 			DefaultHttpClient httpClient = new DefaultHttpClient();
-			HttpPost postRequest = new HttpPost("http://localhost:8080/ProjectFinal/myapi/contacts/insert");
+			HttpPost postRequest = new HttpPost("http://"+ip+":8080/ProjectFinal/myapi/contacts/insert");
 
 			Map inputMap = new HashMap();
 			inputMap.put("name", name);
@@ -126,12 +145,12 @@ public class ContactClient {
 
 	}
 //____________________ edit  a contact____________________
-	public static void editContact(int id,String name, String family, int tel, int mobile, String email) {
+	public  void editContact(int id,String name, String family, int tel, int mobile, String email) {
 
 		try {
 
 			DefaultHttpClient httpClient = new DefaultHttpClient();
-			HttpPut putRequest = new HttpPut("http://localhost:8080/ProjectFinal/myapi/contacts/" + id);
+			HttpPut putRequest = new HttpPut("http://"+ip+":8080/ProjectFinal/myapi/contacts/" + id);
 
 			Map inputMap = new HashMap();
 			inputMap.put("name", name);
@@ -165,12 +184,12 @@ public class ContactClient {
 	}
 //__________________ delete a contact____________
 	
-	public static void deleteContact(int id) {
+	public  void deleteContact(int id) {
 
 		try {
 
 			DefaultHttpClient httpClient = new DefaultHttpClient();
-			HttpDelete deleteRequest = new HttpDelete("http://localhost:8080/ProjectFinal/myapi/contacts/" + id);
+			HttpDelete deleteRequest = new HttpDelete("http://"+ip+":8080/ProjectFinal/myapi/contacts/" + id);
 
 //			Map inputMap = new HashMap();
 //			inputMap.put("name", name);

@@ -17,11 +17,11 @@ public class main {
 		//u.InsertUser(t1);
 		//u.editUser("43e45", "re");
 		//u.deleteUser("er345");
-		ContactClient v =new  ContactClient();
+		ContactClient contact =new  ContactClient("localhost");
 		//v.editContact(3, "mary", "mae", 245, 0124, "mar@H");
-		UserClient y = new UserClient();
+		UserClient user = new UserClient("localhost");
 		//y.deleteUser("zahra0");
-		y.editUser("43e45", "rsdf", "user");
+		user.editUser("43e45", "rsdf", "maanger");
 	
 		try {
 			List<UserEntity> l= u.getUsers();

@@ -28,16 +28,31 @@ import entites.ContactEntity;
 import entites.UserEntity;
 
 public class UserClient {
+	private String IP;
+	
 
+	public UserClient(String iP) {
+		super();
+		IP = iP;
+	}
+	
 	// ________________________ check user login________________________
 
-	public static Boolean ExitUser(String username, String password) {
+	public String getIP() {
+		return IP;
+	}
+
+	public void setIP(String iP) {
+		IP = iP;
+	}
+
+	public Boolean ExitUser(String username, String password) {
 
 		Boolean flage = false;
 		try {
 
 			DefaultHttpClient httpClient = new DefaultHttpClient();
-			HttpPost postRequest = new HttpPost("http://localhost:8080/ProjectFinal/myapi/users/isValid");
+			HttpPost postRequest = new HttpPost("http://"+ IP + ":8080/ProjectFinal/myapi/users/isValid");
 			Map inputMap = new HashMap();
 			inputMap.put("username", username);
 			inputMap.put("password", password);
@@ -63,13 +78,13 @@ public class UserClient {
 		return flage;
 	}
 	// _________________________ show all users_____________________________
-	public static Object[][] showUser() {
+	public  Object[][] showUser() {
 		Object[][] user = null;
 		String result = "";
 		try {
 
 			DefaultHttpClient httpClient = new DefaultHttpClient();
-			HttpGet getRequest = new HttpGet("http://localhost:8080/ProjectFinal/myapi/users/showuser");
+			HttpGet getRequest = new HttpGet("http://"+IP+":8080/ProjectFinal/myapi/users/showuser");
 			// String regex =
 			// "\\b(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
 			HttpResponse response = httpClient.execute(getRequest);
@@ -102,7 +117,7 @@ public class UserClient {
 	}
 
 	// --------------------------- convert json to list
-	public static List jsonToList(String input) {
+	public  List jsonToList(String input) {
 		Gson gsonReceiver = new Gson();
 		Type type = new TypeToken<List<ContactEntity>>() {
 		}.getType();
@@ -116,12 +131,12 @@ public class UserClient {
 	}
 	// __________________________enrollment new user______________________
 
-	public static void saveUser(String username, String password) {
+	public  void saveUser(String username, String password) {
 		final String role = "user";
 		try {
 
 			DefaultHttpClient httpClient = new DefaultHttpClient();
-			HttpPost postRequest = new HttpPost("http://localhost:8080/ProjectFinal/myapi/users/insertUser");
+			HttpPost postRequest = new HttpPost("http://"+IP+":8080/ProjectFinal/myapi/users/insertUser");
 
 			Map inputMap = new HashMap();
 			inputMap.put("username", username);
@@ -153,11 +168,11 @@ public class UserClient {
 	}
 //______________________ delete a user_____________
 	
-	public static void deleteUser(String username) {
+	public  void deleteUser(String username) {
 		try {
 
 			DefaultHttpClient httpClient = new DefaultHttpClient();
-			HttpDelete deleteRequest = new HttpDelete("http://localhost:8080/ProjectFinal/myapi/users/" +username );
+			HttpDelete deleteRequest = new HttpDelete("http://"+IP+":8080/ProjectFinal/myapi/users/" +username );
 			HttpResponse response = httpClient.execute(deleteRequest);
 			if (response.getStatusLine().getStatusCode() != 200) {
 				throw new RuntimeException("Failed : HTTP error code : " + response.getStatusLine().getStatusCode());
@@ -177,12 +192,12 @@ public class UserClient {
 		}
 	}
 //________________ edit user%%%%% just admin____________________
-	public static void editUser(String username,String password, String role) {
+	public  void editUser(String username,String password, String role) {
 
 		try {
 
 			DefaultHttpClient httpClient = new DefaultHttpClient();
-			HttpPut putRequest = new HttpPut("http://localhost:8080/ProjectFinal/myapi/users/editUser/" + username);
+			HttpPut putRequest = new HttpPut("http://"+IP+":8080/ProjectFinal/myapi/users/editUser/" + username);
 
 			Map inputMap = new HashMap();
 			inputMap.put("username", username);
@@ -211,12 +226,12 @@ public class UserClient {
 	}
 //__________________edit user for all __________
 	
-	public static void editUserForAll(String username,String password) {
+	public  void editUserForAll(String username,String password) {
 
 		try {
 
 			DefaultHttpClient httpClient = new DefaultHttpClient();
-			HttpPut putRequest = new HttpPut("http://localhost:8080/ProjectFinal/myapi/users/" + username);
+			HttpPut putRequest = new HttpPut("http://"+IP+":8080/ProjectFinal/myapi/users/" + username);
 
 			Map inputMap = new HashMap();
 			inputMap.put("username", username);
